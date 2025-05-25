@@ -1,0 +1,56 @@
+{
+  "name": "admitad-api-client",
+  "version": "1.0.0",
+  "description": "A TypeScript/JavaScript client for the Admitad API with built-in authentication and token management",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+
+  "types": "dist/index.d.ts",
+  "type": "module",
+  "files": [
+    "dist/**/*",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "build:watch": "tsc --watch",
+    "test": "bun run test/client.test.ts",
+    "example": "bun run examples/basic-usage.ts",
+    "example:aliexpress": "bun run examples/aliexpress-commission.ts",
+    "dev": "bun run --watch index.ts",
+    "prepublishOnly": "npm run build",
+    "clean": "rm -rf dist"
+  },
+  "keywords": [
+    "admitad",
+    "api",
+    "client",
+    "affiliate",
+    "marketing",
+    "typescript",
+    "javascript",
+    "aliexpress",
+    "commission"
+  ],
+  "author": "Roman Zagrebin <seenyat@gmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/seenyat/admitad-api-client.git"
+  },
+  "bugs": {
+    "url": "https://github.com/seenyat/admitad-api-client/issues"
+  },
+  "homepage": "https://github.com/seenyat/admitad-api-client#readme",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "typescript": "^5.0.0"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  }
+}

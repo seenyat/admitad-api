@@ -1,0 +1,24 @@
+# Source files (only include compiled dist)
+src/
+index.ts
+tsconfig.json
+
+# Development files
+examples/
+test/
+.env*
+env.example
+
+# Build tools
+.vscode/
+bun.lock
+
+# Git
+.git/
+.gitignore
+
+# Documentation (keep README.md)
+QUICKSTART.md
+
+# Node modules
+node_modules/ 
