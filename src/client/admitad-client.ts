@@ -6,7 +6,11 @@ import type {
   AdmitadScope,
   AdmitadRequestOptions,
   AliExpressCommissionRequest,
-  AliExpressCommissionResponse
+  AliExpressCommissionResponse,
+  UrlShortenerRequest,
+  UrlShortenerResponse,
+  DeeplinkGeneratorParams,
+  DeeplinkGeneratorResult
 } from '../types/admitad';
 import { encodeCredentials, createAuthHeader, isTokenExpired, calculateExpirationTime } from '../utils/auth';
 
@@ -174,6 +178,66 @@ export class AdmitadApiClient {
     return await this.request<AliExpressCommissionResponse>('/aliexpress/commission_rates/', {
       method: 'POST',
       body: requestBody
+    });
+  }
+
+  /**
+   * Shortens an Admitad URL using the URL shortener service
+   * @param link - The Admitad link to shorten (must belong to Admitad's domains)
+   * @returns Promise resolving to shortened URL response
+   */
+  async shortenUrl(link: string): Promise<UrlShortenerResponse> {
+    const requestBody = { link };
+
+    return await this.request<UrlShortenerResponse>('/shortlink/modify/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      body: new URLSearchParams(requestBody as Record<string, string>).toString()
+    });
+  }
+
+  /**
+   * Generates deeplinks for affiliate programs
+   * @param websiteId - The ad space ID (w_id)
+   * @param campaignId - The affiliate program ID (c_id)
+   * @param params - Deeplink generation parameters
+   * @returns Promise resolving to generated deeplinks
+   */
+  async generateDeeplinks(
+    websiteId: string | number,
+    campaignId: string | number,
+    params: DeeplinkGeneratorParams
+  ): Promise<DeeplinkGeneratorResult> {
+    const endpoint = `/deeplink/${websiteId}/advcampaign/${campaignId}/`;
+    
+    // Convert ulp to array if it's a string
+    const ulpArray = Array.isArray(params.ulp) ? params.ulp : [params.ulp];
+    
+    // Build query parameters
+    const queryParams: Record<string, string> = {};
+    
+    // Add subid parameters if provided
+    if (params.subid) queryParams.subid = params.subid;
+    if (params.subid1) queryParams.subid1 = params.subid1;
+    if (params.subid2) queryParams.subid2 = params.subid2;
+    if (params.subid3) queryParams.subid3 = params.subid3;
+    if (params.subid4) queryParams.subid4 = params.subid4;
+    
+    // Add multiple ulp parameters
+    const searchParams = new URLSearchParams();
+    Object.entries(queryParams).forEach(([key, value]) => {
+      searchParams.append(key, value);
+    });
+    
+    ulpArray.forEach(ulp => {
+      searchParams.append('ulp', ulp);
+    });
+
+    return await this.request<DeeplinkGeneratorResult>(endpoint, {
+      method: 'GET',
+      params: Object.fromEntries(searchParams.entries())
     });
   }
 } 

@@ -25,6 +25,8 @@ try {
   console.log('✓ Is authenticated (should be false):', client.isAuthenticated());
   console.log('✓ Access token (should be null):', client.getAccessToken());
   console.log('✓ AliExpress method exists:', typeof client.getAliExpressCommissionRates === 'function');
+  console.log('✓ URL shortener method exists:', typeof client.shortenUrl === 'function');
+  console.log('✓ Deeplink generator method exists:', typeof client.generateDeeplinks === 'function');
   
 } catch (error) {
   console.error('✗ Client creation failed:', error);

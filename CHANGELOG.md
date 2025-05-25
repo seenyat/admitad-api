@@ -5,6 +5,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.0] - 2024-12-XX
+
+### Added
+- **URL Shortener API**: Added `shortenUrl()` method to shorten Admitad URLs using the official shortener service
+- **Deeplink Generator API**: Added `generateDeeplinks()` method to generate affiliate deeplinks with custom parameters
+- New scopes: `short_link` and `deeplink_generator`
+- Complete TypeScript definitions for new APIs
+- Comprehensive examples and documentation
+
+### Enhanced
+- Updated README with examples for URL shortener and deeplink generator
+- Added new example file `examples/url-shortener-deeplinks.ts`
+- Updated quick start guide with new API methods
+- Enhanced test coverage for new methods
+
 ## [1.0.1] - 2024-12-XX
 
 ### Fixed

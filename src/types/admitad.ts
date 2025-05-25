@@ -36,7 +36,9 @@ export type AdmitadScope =
   | 'statistics'
   | 'manage_websites'
   | 'manage_advcampaigns'
-  | 'aliexpress_commission';
+  | 'aliexpress_commission'
+  | 'short_link'
+  | 'deeplink_generator';
 
 export interface AdmitadRequestOptions {
   method?: 'GET' | 'POST' | 'PUT' | 'DELETE';
@@ -60,4 +62,30 @@ export interface AliExpressCommissionRate {
 
 export interface AliExpressCommissionResponse {
   commission_rates: AliExpressCommissionRate[];
-} 
+}
+
+// URL Shortener API types
+export interface UrlShortenerRequest {
+  link: string;
+}
+
+export interface UrlShortenerResponse {
+  short_link: string;
+}
+
+// Deeplink Generator API types
+export interface DeeplinkGeneratorParams {
+  subid?: string;
+  subid1?: string;
+  subid2?: string;
+  subid3?: string;
+  subid4?: string;
+  ulp: string | string[];
+}
+
+export interface DeeplinkGeneratorResponse {
+  link: string;
+  is_affiliate_product: boolean | null;
+}
+
+export type DeeplinkGeneratorResult = DeeplinkGeneratorResponse[]; 

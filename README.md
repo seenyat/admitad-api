@@ -116,6 +116,8 @@ Authenticates with the Admitad API and stores the access token.
 - `'manage_websites'` - Manage websites
 - `'manage_advcampaigns'` - Manage advertising campaigns
 - `'aliexpress_commission'` - Access to AliExpress commission rates
+- `'short_link'` - Access to URL shortener service
+- `'deeplink_generator'` - Access to deeplink generator
 
 ##### `request<T>(endpoint: string, options?: AdmitadRequestOptions): Promise<T>`
 
@@ -150,6 +152,28 @@ Gets commission rates for AliExpress products.
 
 **Returns:**
 - Promise resolving to commission rates data including product names, commission rates, hot product status, etc.
+
+##### `shortenUrl(link: string): Promise<UrlShortenerResponse>`
+
+Shortens an Admitad URL using the URL shortener service.
+
+**Parameters:**
+- `link`: The Admitad link to shorten (must belong to Admitad's domains)
+
+**Returns:**
+- Promise resolving to shortened URL response with `short_link` property
+
+##### `generateDeeplinks(websiteId: string | number, campaignId: string | number, params: DeeplinkGeneratorParams): Promise<DeeplinkGeneratorResult>`
+
+Generates deeplinks for affiliate programs.
+
+**Parameters:**
+- `websiteId`: The ad space ID (w_id)
+- `campaignId`: The affiliate program ID (c_id)  
+- `params`: Deeplink generation parameters including subids and target URLs
+
+**Returns:**
+- Promise resolving to array of generated deeplinks with affiliation status
 
 ### Factory Functions
 
@@ -225,6 +249,46 @@ commissionData.commission_rates.forEach(rate => {
 });
 ```
 
+### URL Shortener
+
+```typescript
+// Authenticate with URL shortener scope
+await client.authenticate(['short_link']);
+
+// Shorten an Admitad URL
+const longUrl = 'http://ad.admitad.com/g/4657cb709efb21a781aacd1ff8c49e/';
+const result = await client.shortenUrl(longUrl);
+
+console.log('Shortened URL:', result.short_link);
+// Output: https://fas.st/ala7-
+```
+
+### Deeplink Generator
+
+```typescript
+// Authenticate with deeplink generator scope
+await client.authenticate(['deeplink_generator']);
+
+// Generate deeplinks for an affiliate program
+const websiteId = '232236';
+const campaignId = '234433';
+
+const deeplinks = await client.generateDeeplinks(websiteId, campaignId, {
+  subid: 'Reebok',
+  subid1: 'white_sneakers',
+  subid2: '40sale',
+  ulp: [
+    'http://admitad.com/post/250618/',
+    'http://admitad.com/post/220658/'
+  ]
+});
+
+deeplinks.forEach(deeplink => {
+  console.log('Generated link:', deeplink.link);
+  console.log('Is affiliate product:', deeplink.is_affiliate_product);
+});
+```
+
 ### Error Handling
 
 ```typescript
@@ -262,6 +326,7 @@ cp env.example .env
 # Then run the examples
 bun run example                    # Basic usage example
 bun run example:aliexpress        # AliExpress commission rates example
+bun run example:links             # URL shortener and deeplink generator example
 ```
 
 ## API Documentation

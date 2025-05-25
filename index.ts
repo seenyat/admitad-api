@@ -12,7 +12,12 @@ export type {
   AdmitadRequestOptions,
   AliExpressCommissionRequest,
   AliExpressCommissionRate,
-  AliExpressCommissionResponse
+  AliExpressCommissionResponse,
+  UrlShortenerRequest,
+  UrlShortenerResponse,
+  DeeplinkGeneratorParams,
+  DeeplinkGeneratorResponse,
+  DeeplinkGeneratorResult
 } from './src/types/admitad';
 
 // Utility exports

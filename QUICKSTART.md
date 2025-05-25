@@ -42,6 +42,7 @@ main().catch(console.error);
 ```bash
 bun run example                    # Basic usage
 bun run example:aliexpress        # AliExpress commission rates
+bun run example:links             # URL shortener and deeplinks
 ```
 
 ## 4. Available scopes
@@ -55,6 +56,8 @@ Choose the scopes you need for your application:
 - `manage_websites` - Manage websites
 - `manage_advcampaigns` - Manage campaigns
 - `aliexpress_commission` - Access AliExpress commission rates
+- `short_link` - Access URL shortener service
+- `deeplink_generator` - Access deeplink generator
 
 ## 5. Common API endpoints
 
@@ -83,6 +86,17 @@ await client.authenticate(['aliexpress_commission']);
 const commissionRates = await client.getAliExpressCommissionRates([
   'https://aliexpress.com/item/123456789.html'
 ]);
+
+// Shorten URLs
+await client.authenticate(['short_link']);
+const shortUrl = await client.shortenUrl('http://ad.admitad.com/g/longurl/');
+
+// Generate deeplinks
+await client.authenticate(['deeplink_generator']);
+const deeplinks = await client.generateDeeplinks('websiteId', 'campaignId', {
+  subid: 'test',
+  ulp: 'http://example.com/product'
+});
 ```
 
 ## Need help?
