@@ -6,6 +6,7 @@ tsconfig.json
 # Development files
 examples/
 test/
+scripts/
 .env*
 env.example
 
